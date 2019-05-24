@@ -10,24 +10,37 @@ end
 
 first_expression = {}
 
-function addExpression()
-    local measures = finale.FCMeasures()
-    measures:LoadRegion(finenv.Region())
-    
-    for m in each(measures) do
-        for noteentry in eachentrysaved(finenv.Region()) do
-            add_expression=finale.FCExpression()
-            add_expression:SetStaff(noteentry:GetStaff())
-            add_expression:SetVisible(true)
-            add_expression:SetMeasurePos(noteentry:GetMeasurePos())
-            add_expression:SetScaleWithEntry(false)
-            add_expression:SetPartAssignment(true)
-            add_expression:SetScoreAssignment(true)
-            add_expression:SetID(first_expression[1])
-            local and_cell = finale.FCCell(noteentry:GetMeasure(), noteentry:GetStaff())
-            add_expression:SaveNewToCell(and_cell)
+function addExpression(staff_num, measure_num, measure_pos)
+    add_expression=finale.FCExpression()
+    add_expression:SetStaff(staff_num)
+    add_expression:SetVisible(true)
+    add_expression:SetMeasurePos(measure_pos)
+    add_expression:SetScaleWithEntry(false)
+    add_expression:SetPartAssignment(true)
+    add_expression:SetScoreAssignment(true)
+    add_expression:SetID(first_expression[1])
+    local and_cell = finale.FCCell(measure_num, staff_num)
+    add_expression:SaveNewToCell(and_cell)
+end
+
+function getFirstNote()
+    for staff_range = finenv.Region():GetStartStaff(), finenv.Region():GetEndStaff() do
+        local first_note = {}
+        local music_range = finenv.Region()
+        music_range:SetStartStaff(staff_range)
+        music_range:SetEndStaff(staff_range)
+        local measures = finale.FCMeasures()
+        measures:LoadRegion(music_range)
+        
+        for m in each(measures) do
+            for noteentry in eachentrysaved(finenv.Region()) do
+                if noteentry:IsNote() then
+                    table.insert(first_note, {noteentry:GetStaff(), noteentry:GetMeasure(), noteentry:GetMeasurePos()})
+                end
+            end
         end
-    end 
+        addExpression(first_note[1][1], first_note[1][2], first_note[1][3])
+    end
 end
 
 function CreateExpression(glyph, table_name)
@@ -69,4 +82,4 @@ function findExpression(font, glyph, table_name)
 end
 
 findExpression("^^fontMus", ")F", first_expression)
-addExpression()
+getFirstNote()
