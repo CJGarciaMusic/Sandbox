@@ -1,4 +1,4 @@
-on subMenuItem(theMenuName, theMenuItemName)
+`on subMenuItem(theMenuName, theMenuItemName)
 	tell application "System Events"
 		set appName to name of the first process whose frontmost is true
 	end tell
