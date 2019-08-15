@@ -10,14 +10,11 @@ on flipDBScores()
 	tell application "System Events"
 		set tempoData to display dialog "Enter the tempo you want:" default answer ""
 		set tempoNum to text returned of tempoData
+		tell application "Finale"
+			activate
+		end tell
 	end tell
-	
-	tell application "Finale"
-		activate
-	end tell
-	
-	
-	
+
 	tell application "System Events"
 		set appName to name of the first process whose frontmost is true
 	end tell
@@ -59,6 +56,8 @@ on flipDBScores()
 				set inst_count to (count of inst_list)
 				repeat with instNum from 1 to inst_count
 					click menu item (item instNum of inst_list) of menu 1 of menu item "Edit Part" of menu 1 of menu bar item "Document" of menu bar 1
+					click pop up button 1 of row 1 of outline 1 of scroll area 1 of tab group 1 of window "ScoreManager"
+					click menu item "Garritan Instruments for Finale" of menu 1 of outline 1 of scroll area 1 of tab group 1 of window "ScoreManager"
 					click pop up button 2 of row 1 of outline 1 of scroll area 1 of tab group 1 of window "ScoreManager"
 					click menu item "Keyboards" of menu 1 of outline 1 of scroll area 1 of tab group 1 of window "ScoreManager"
 					click menu item "Concert D Grand Piano" of menu 1 of menu item "Keyboards" of menu 1 of outline 1 of scroll area 1 of tab group 1 of window "ScoreManager"
@@ -109,12 +108,4 @@ on flipDBScores()
 	end try
 end flipDBScores
 
-set theDocuments to choose file with prompt "Please select the Finale Files you'd like to process" with multiple selections allowed
-
-repeat with fileName in theDocuments
-	tell application "Finder"
-		open file fileName
-	end tell
-	flipDBScores()
-end repeat
-
+flipDBScores()
