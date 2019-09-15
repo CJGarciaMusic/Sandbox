@@ -10,7 +10,7 @@ on subMenuItem(theMenuName, theMenuItemName, theSubMenuItem)
 		end tell
 		return true
 	on error
-		set theAlertText to "A Stream Deck error has occurred."
+		set theAlertText to "A Finale Jetpack error has occurred."
         set theAlertMessage to "The " & theSubMenuItem & " tool wasn't able to be selected.\n\nPlease try again."
         display alert theAlertText message theAlertMessage as critical
 		return false

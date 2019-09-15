@@ -22,7 +22,7 @@ on subMenuItem(firstMenu, firstSubMenu, firstOption, firstRadio, secondMenu, sec
 		return true
 	on error
 		tell application "System Events"
-		set theAlertText to "A Stream Deck error has occurred."
+		set theAlertText to "JetStream has encountered some turbulence..."
         set theAlertMessage to "The plug-in " & secondSubMenu & " wasn't able to be selected.\n\nPlease try again."
         display alert theAlertText message theAlertMessage as critical
 		return false
