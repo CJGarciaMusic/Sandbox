@@ -1,3 +1,11 @@
+function plugindef()
+    finaleplugin.RequireSelection = true
+    finaleplugin.Author = "CJ Garcia"
+    finaleplugin.Copyright = "© 2019 CJ Garcia Music"
+    finaleplugin.Version = "0.2"
+    finaleplugin.Date = "8/12/2019"
+    return "Accidentals Above Notes", "Accidentals Above Notes", "Moves accidentals above or below notes in a selected region."
+end
 
 for noteentry in eachentrysaved(finenv.Region()) do
     for note in each(noteentry) do
