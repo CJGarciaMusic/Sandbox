@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>com.musicprep.jetstream PI</title>
+    <link rel="stylesheet" href="sdpi.css">
+    <script src="common.js"></script>
+</head>
+
+<body>
+    <div class="sdpi-wrapper">
+        <div type="select" class="sdpi-item">
+            <div class="sdpi-item-label">Action Type</div>
+            <select class="sdpi-item-value" onchange="myNewFunction(this);">
+                <option selected value="0">Select Action...</option>
+                <option value="1">Menu Item</option>
+                <option value="2">Lua Function</option>
+                <option value="3">More Actions</option>
+            </select>
+        </div>
+        <div id="newLists">
+        </div>
+        <div id="menuItem">
+        </div>
+        <div id="subMenuItem">
+        </div>
+    </div>
+
+
+    <script>
+        function subMenuItem(menuArray, subID, menuLabel, divID){
+            deleteChildNodes("subMenuItem")
+            var myParent = document.getElementById(divID);
+            var secondDiv = document.createElement("div");
+            secondDiv.className = "sdpi-item";
+            secondDiv.nodeType = "select";
+            myParent.appendChild(secondDiv);
+            var theLabel = document.createElement("div");
+            theLabel.className = "sdpi-item-label";
+            theLabel.innerText = menuLabel;
+            secondDiv.appendChild(theLabel);
+            var array = menuArray;
+            var selectList = document.createElement("select");
+            selectList.id = subID;
+            selectList.className = "sdpi-item-value";
+            selectList.onchange = function(){subMenuCheck(this);};
+            var ref = document.getElementById(subID);
+            secondDiv.insertBefore(selectList, ref);
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                selectList.appendChild(option);     
+            }
+        }
+        function subMenuCheck(element){
+            var value = element.options[element.selectedIndex].value;
+            if (value == "New"){  
+                subMenuItem(["Select Submenu Item","Document With Setup Wizard...","Default Document","Document From Template...","Document Without Libraries","Exercise Wizard..."], "submenuList", "Submenu Item", "subMenuItem")
+            }
+            if (value == "Import"){
+                subMenuItem(["Select Submenu Item", "MusicXML","Translate Folder from MusicXML...","MusicXML Preferences..."])
+            }
+            sendValueToPlugin(String(event.target.value), 'setValue');
+        }
+
+        function menuItem(menuArray, subID, menuLabel, divID){
+            deleteChildNodes("menuItem")
+            deleteChildNodes("subMenuItem")
+            var myParent = document.getElementById(divID);
+            var secondDiv = document.createElement("div");
+            secondDiv.className = "sdpi-item";
+            secondDiv.nodeType = "select";
+            myParent.appendChild(secondDiv);
+            var theLabel = document.createElement("div");
+            theLabel.className = "sdpi-item-label";
+            theLabel.innerText = menuLabel;
+            secondDiv.appendChild(theLabel);
+            var array = menuArray;
+            var selectList = document.createElement("select");
+            selectList.id = subID;
+            selectList.className = "sdpi-item-value";
+            selectList.onchange = function(){subMenuCheck(this);};
+            var ref = document.getElementById(subID);
+            secondDiv.insertBefore(selectList, ref);
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                selectList.appendChild(option);     
+            }
+        }
+
+        function menuCheck(element){
+            var value = element.options[element.selectedIndex].value;
+            if (value == "File"){
+                menuItem(["Select menu item","Launch Window","New","Open","Open Worksheets and Repertoire"], "fileMenu", "Submenu", "menuItem")
+            } 
+            if (value == "Edit"){
+                menuItem(["Select menu item","Undo/Redo List","Select All","Select Region...","Cut","Copy","Insert","Paste","Paste Multiple...","Use Filter","Edit Filter..."], "fileMenu", "Submenu", "menuItem")
+            }
+            else {
+                sendValueToPlugin(String(event.target.value), 'setValue');
+            }
+        }
+
+        function createList(myArray, myID, myLabel, divID){
+            deleteChildNodes("menuItem");
+            var myParent = document.getElementById(divID);
+            var secondDiv = document.createElement("div");
+            secondDiv.className = "sdpi-item";
+            secondDiv.nodeType = "select";
+            myParent.appendChild(secondDiv);
+            var theLabel = document.createElement("div");
+            theLabel.className = "sdpi-item-label";
+            theLabel.innerText = myLabel;
+            secondDiv.appendChild(theLabel);
+            var array = myArray;
+            var selectList = document.createElement("select");
+            selectList.id = myID;
+            selectList.className = "sdpi-item-value";
+            selectList.onchange = function(){menuCheck(this);};
+            var ref = document.getElementById(myID);
+            secondDiv.insertBefore(selectList, ref);
+            for (var i = 0; i < array.length; i++) {
+                var option = document.createElement("option");
+                option.value = array[i];
+                option.text = array[i];
+                selectList.appendChild(option);     
+            }
+        }
+        function deleteChildNodes(nodeName){
+            var e = document.getElementById(nodeName);         
+            var child = e.lastElementChild;  
+            while (child) { 
+                e.removeChild(child); 
+                child = e.lastElementChild; 
+            } 
+        }
+        function myNewFunction(element) {
+            
+            var value = element.options[element.selectedIndex].value;
+            if (value == "1") {
+                deleteChildNodes("newLists");
+                deleteChildNodes("menuItem");
+                deleteChildNodes("subMenuItem");
+                createList(["Select Menu","File","Edit","Utilities","View",
+                "Document","MIDI/Audio","Tools","Plug-ins","Window","Help","TG Tools"], "menuList", "Menu Item", "newLists")
+            }
+            if (value == "2"){
+                deleteChildNodes("newLists");
+                deleteChildNodes("menuItem");
+                deleteChildNodes("subMenuItem");
+                createList(["0100", "0101", "0800", "0900"], "luaList", "Lua Code", "newLists")
+            }
+            if (value == "3"){
+                deleteChildNodes("newLists");
+                deleteChildNodes("menuItem");
+                deleteChildNodes("subMenuItem");
+                createList(["Resize Pages", "Playback shit", "MAOR"], "customList", "Other Action", "newLists")
+            }
+            if (value == "0"){
+                deleteChildNodes("newLists");
+                deleteChildNodes("menuItem");
+                deleteChildNodes("subMenuItem");
+            }
+        }
+        var pluginAction = null,
+            uuid = '',
+            oValueSelector = document.querySelector(".setvalueSelect");
+
+        if ($SD) {
+            $SD.on('connected', function (jsonObj) {
+                uuid = jsonObj['uuid'];
+                if (jsonObj.hasOwnProperty('actionInfo')) {
+                    pluginAction = jsonObj.actionInfo['action'];
+                }
+            });
+        };
+
+        function sendValueToPlugin(value, param) {
+            if (param === 'setValue') {
+                oValueSelector && Array.prototype.forEach.call(oValueSelector.options, function (o) {
+                    const val = (value);
+                    if (o.value !== val) {
+                        oValueSelector.value = val;
+                    }
+                })
+            }
+
+            if ($SD && $SD.connection) {
+                var payload = {};
+                if (param) {
+                    payload[param] = value;
+                }
+                $SD.api.sendToPlugin(uuid, pluginAction, payload);
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

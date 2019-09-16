@@ -18,7 +18,7 @@
         end tell
 		return layer_check
 	on error
-		set theAlertText to "A Stream Deck error has occurred."
+		set theAlertText to "A Finale Jetpack error has occurred."
         set theAlertMessage to "Layer wasn't able to be selected.\n\nPlease try again."
         display alert theAlertText message theAlertMessage as critical
 		return false
