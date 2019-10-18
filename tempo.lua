@@ -1,4 +1,4 @@
-local function place_expression(exp_text, exp_id)
+local function place_expression(exp_text, exp_id, list_id)
     local measure= finale.FCMeasure()
     local music_region = finenv.Region()
     local first_measure = music_region:GetStartMeasure()
@@ -19,21 +19,34 @@ local function place_expression(exp_text, exp_id)
     else
         local and_expression=finale.FCExpression()
         local region = finenv.Region()
-            and_expression:SetStaffListID(1)
-            and_expression:SetVisible(true)
-            and_expression:SetMeasurePos(0)
-            and_expression:SetScaleWithEntry(false)
-            and_expression:SetLayerAssignment(1)
-            and_expression:SetPartAssignment(true)
-            and_expression:SetScoreAssignment(true)
-            and_expression:SetPlaybackLayerAssignment(1)
-            and_expression:SetID(exp_id)
-            local and_cell = finale.FCCell(first_measure,1)
-            and_expression:SaveNewToCell(and_cell) 
+        and_expression:SetID(exp_id)
+        region:SetFullDocument()
+        for addstaff = region:GetStartStaff(), region:GetEndStaff() do
+            local staff_num = finale.FCStaffList()
+            staff_num:SetMode(finale.SLMODE_CATEGORY_SCORE)
+            staff_num:Load(list_id)
+            if staff_num:IncludesStaff(addstaff) then
+                and_expression:SetScoreAssignment(true)
+                local and_cell = finale.FCCell(first_measure, addstaff)
+            and_expression:SaveNewToCell(and_cell)
+            else
+                and_expression:SetPartAssignment(true)
+                local and_cell = finale.FCCell(first_measure, addstaff)
+            and_expression:SaveNewToCell(and_cell)
+            end
+            
+        end
+        local staff_num = finale.FCStaffList()
+        staff_num:SetMode(finale.SLMODE_CATEGORY_SCORE)
+        staff_num:Load(list_id)
+        if staff_num:IncludesStaff(-1) then
+            local and_cell = finale.FCCell(first_measure, 1)
+            and_expression:SaveNewToCell(and_cell)
+        end
     end
 end
 
-local function create_expression(text, category)
+local function create_expression(text, category, staff_list)
     local exp_ted = finale.FCTextExpressionDef()
     local exp_str = finale.FCString()
     exp_str.LuaString = text
@@ -48,11 +61,10 @@ local function create_expression(text, category)
     exp_ted:SetBreakMMRest(false)
     exp_ted:SaveNew()
     local item_no = exp_ted:GetItemNo()
-    place_expression(text, item_no)
-    print(text, item_no)
+    place_expression(text, item_no, staff_list)
 end
 
-local function find_expression(exp_text, cat_id)
+local function find_expression(exp_text, cat_id, staff_id)
     local theID = 0
     local teds = finale.FCTextExpressionDefs()
     teds:LoadAll()
@@ -63,15 +75,16 @@ local function find_expression(exp_text, cat_id)
         end
     end
     if theID == 0 then
-        create_expression(exp_text, cat_id)
+        create_expression(exp_text, cat_id, staff_id)
     else
-        place_expression(exp_text, theID)
+        place_expression(exp_text, theID, staff_id)
     end
 end
 
 function create_tempo(tempo_text, beat_duration, beat_number, parenthetical_bool)
     local cat_def = finale.FCCategoryDef()
     cat_def:Load(2)
+    local staff_id = cat_def:GetStaffListID()
     local fonti = cat_def:CreateTextFontInfo()
     cat_def:GetMusicFontInfo(fonti)
     local music_font = "^fontMus"..fonti:CreateEnigmaString(finale.FCString()).LuaString
@@ -89,7 +102,6 @@ function create_tempo(tempo_text, beat_duration, beat_number, parenthetical_bool
     if user_text ~= "" then
         user_text = text_font..user_text
     end
-    print(user_duration)
     if user_duration ~= 1 then
         if user_duration == 2 then
             user_duration = music_font.."w"
@@ -122,7 +134,7 @@ function create_tempo(tempo_text, beat_duration, beat_number, parenthetical_bool
     end
     
     local full_string = user_text..start_parentheses..user_duration..user_number..end_parentheses
-    find_expression(full_string, 2)
+    find_expression(full_string, 2, staff_id)
 end
 
 function tempo_display()
