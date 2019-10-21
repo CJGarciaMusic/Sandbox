@@ -1,4 +1,13 @@
-local function place_expression(exp_text, exp_id, list_id)
+function plugindef()
+    finaleplugin.RequireSelection = true
+    finaleplugin.Author = "CJ Garcia"
+    finaleplugin.Copyright = "© 2019 CJ Garcia Music"
+    finaleplugin.Version = "0.1"
+    finaleplugin.Date = "8/8/2019"
+    return "Create Tempo Marking", "Create Tempo Marking", "Creates a custom tempo marking"
+end
+
+function place_expression(exp_text, exp_id, list_id)
     local measure= finale.FCMeasure()
     local music_region = finenv.Region()
     local first_measure = music_region:GetStartMeasure()
@@ -21,28 +30,30 @@ local function place_expression(exp_text, exp_id, list_id)
         local region = finenv.Region()
         and_expression:SetID(exp_id)
         region:SetFullDocument()
-        for addstaff = region:GetStartStaff(), region:GetEndStaff() do
-            local staff_num = finale.FCStaffList()
-            staff_num:SetMode(finale.SLMODE_CATEGORY_SCORE)
-            staff_num:Load(list_id)
-            if staff_num:IncludesStaff(addstaff) then
-                and_expression:SetScoreAssignment(true)
-                local and_cell = finale.FCCell(first_measure, addstaff)
-            and_expression:SaveNewToCell(and_cell)
-            else
-                and_expression:SetPartAssignment(true)
-                local and_cell = finale.FCCell(first_measure, addstaff)
-            and_expression:SaveNewToCell(and_cell)
-            end
-            
-        end
-        local staff_num = finale.FCStaffList()
-        staff_num:SetMode(finale.SLMODE_CATEGORY_SCORE)
-        staff_num:Load(list_id)
-        if staff_num:IncludesStaff(-1) then
+        if region:CalcStaffSpan() == 1 then
+            and_expression:SetScoreAssignment(true)
             local and_cell = finale.FCCell(first_measure, 1)
             and_expression:SaveNewToCell(and_cell)
+        else
+            for addstaff = region:GetStartStaff(), region:GetEndStaff() do
+                local staff_num = finale.FCStaffList()
+                staff_num:SetMode(finale.SLMODE_CATEGORY_SCORE)
+                staff_num:Load(list_id)
+                and_expression:SetPartAssignment(true)
+                if staff_num:IncludesStaff(addstaff) then
+                    and_expression:SetScoreAssignment(true)
+                    local and_cell = finale.FCCell(first_measure, addstaff)
+                    and_expression:SaveNewToCell(and_cell)
+                end    
+            end
         end
+        -- local staff_num = finale.FCStaffList()
+        -- staff_num:SetMode(finale.SLMODE_CATEGORY_SCORE)
+        -- staff_num:Load(list_id)
+        -- if staff_num:IncludesStaff(-1) then
+        --     local and_cell = finale.FCCell(first_measure, 1)
+        --     and_expression:SaveNewToCell(and_cell)
+        -- end
     end
 end
 
@@ -69,9 +80,15 @@ local function find_expression(exp_text, cat_id, staff_id)
     local teds = finale.FCTextExpressionDefs()
     teds:LoadAll()
     for ted in each(teds) do
-        local ted_str = ted:CreateTextString()
-        if string.match(ted_str.LuaString, exp_text) then
-            theID = ted:GetItemNo()
+        if ted.CategoryID == cat_id then
+            local ted_str = ted:CreateTextString()
+            ted_str:TrimEnigmaTags()
+            local exp_str = finale.FCString()
+            exp_str.LuaString = exp_text
+            exp_str:TrimEnigmaTags()
+            if string.match(ted_str.LuaString, exp_str.LuaString) then
+                theID = ted:GetItemNo()
+            end
         end
     end
     if theID == 0 then
@@ -96,32 +113,15 @@ function create_tempo(tempo_text, beat_duration, beat_number, parenthetical_bool
     local user_duration = beat_duration
     local user_number = beat_number
     local user_parentheses = parenthetical_bool
-    local start_parentheses = " ("
+    local start_parentheses = "("
     local end_parentheses = text_font..")"
 
     if user_text ~= "" then
         user_text = text_font..user_text
     end
-    if user_duration ~= 1 then
-        if user_duration == 2 then
-            user_duration = music_font.."w"
-        elseif user_duration == 3 then
-            user_duration = music_font.."h"
-        elseif user_duration == 4 then
-            user_duration = music_font.."q"
-        elseif user_duration == 5 then
-            user_duration = music_font.."e"
-        elseif user_duration == 6 then
-            user_duration = music_font.."x"
-        elseif user_duration == 7 then
-            user_duration = music_font.."h."
-        elseif user_duration == 8 then
-            user_duration = music_font.."q."
-        elseif user_duration == 9 then
-            user_duration = music_font.."e."
-        elseif user_duration == 10 then
-            user_duration = music_font.."x."
-        end
+    
+    if user_duration ~= "" then
+        user_duration = music_font..user_duration
     end
     
     if user_number ~= "" then
@@ -129,7 +129,11 @@ function create_tempo(tempo_text, beat_duration, beat_number, parenthetical_bool
     end
 
     if user_parentheses == false then
-        start_parentheses = " "
+        if user_text:sub(-1) == " " then
+            start_parentheses = ""
+        else
+            start_parentheses = " "
+        end
         end_parentheses = ""
     end
     
@@ -137,16 +141,49 @@ function create_tempo(tempo_text, beat_duration, beat_number, parenthetical_bool
     find_expression(full_string, 2, staff_id)
 end
 
-function tempo_display()
-    local tempo_input = finenv.UserValueInput()
-    tempo_input:SetTypes("String", "NumberedList", "String", "Boolean")
-    tempo_input:SetDescriptions("Tempo Text", "MM", "Beats Per Minute", "Use Parentheses?")
-    tempo_input:SetLists(nil, {"Select...", "Whole Note", "Half Note", "Quarter Note", "Eighth Note", "Sixteenth Note", "Dotted Half Note", "Dotted Quarter Note", "Dotted Eighth Note", "Dotted Sixteenth Note"}, nil, nil)
-    local returnvalues = tempo_input:Execute()
+function parse_tempo(the_string)
+    local tempo_text = ""
+    local beat_duration = ""
+    local beat_number = ""
+    local parenthetical_bool = false
+    if (string.match(the_string, "%(?[qQhHwWeEsSxX][.]?%s?=%s?%d+%s?[%-–—]?%s?%d+%)?")) then
+        local new_string = string.find(the_string, "%(?[qQhHwWeEsSxX][.]?%s?=%s?%d+%)?")
+        if (new_string) > 1 then
+            tempo_text = the_string:sub(1, (new_string - 1))
+        else
+            tempo_text = ""
+        end
+        local metronome_text = the_string:sub(new_string)
+        if string.find(metronome_text, "%(") then
+            parenthetical_bool = true
+        end
+        if string.find(metronome_text, "[qQhHwWeEsSxX][.]?") then
+            beat_duration = metronome_text:sub(string.find(metronome_text, "[qQhHwWeEsSxX][.]?"))
+        end
+        if string.find(metronome_text, "%d+%s?[%-–—]?%s?%d+") then
+            beat_number = metronome_text:sub(string.find(metronome_text, "%d+%s?[%-–—]?%s?%d+"))
+        end
+    else
+        if string.match(the_string, "%a*") then
+            tempo_text = the_string
+        end
+    end
+    create_tempo(tempo_text, beat_duration, beat_number, parenthetical_bool)
+end
+
+function user_input(display_type)
+    local input_dialog = finenv.UserValueInput()
+    input_dialog:SetTypes("String")
+    input_dialog:SetDescriptions("Pleaes Enter Your "..display_type.."Text")
+    local returnvalues = input_dialog:Execute()
 
     if returnvalues ~= nil then
-        create_tempo(returnvalues[1], returnvalues[2], returnvalues[3], returnvalues[4], returnvalues[5])
+        if returnvalues[1] ~= "" then
+            if display_type == "Tempo" then
+                parse_tempo(returnvalues[1], display_type)
+            end
+        end
     end
 end
 
-tempo_display()
+user_input("Tempo")
