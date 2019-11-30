@@ -1,3 +1,5 @@
+#!/usr/bin/env osascript
+
 on errorMessage(displayMessage)
 	tell application "System Events"
 		set theAlertText to "JetStream Alert"
@@ -35,8 +37,6 @@ on subMenuItem(theMenuName, theMenuItemName, theSubMenuItem, jetpackCode)
 	end try
 end subMenuItem
 
--- subMenuItem("Plug-ins", "JW Lua", "JetStream Finale Controller", "1009")
--- osascript JetStream.scpt argument1 argument2 in terminal
 on run argv
 	subMenuItem((item 1 of argv), (item 2 of argv), (item 3 of argv), (item 4 of argv))
 end run
