@@ -56,10 +56,10 @@ on changeColors(colorList)
 end changeColors
 
 set myBlack to "000000"
-set myOrange to "ED7A15"
-set myBlue to "1561EE"
-set myYellow to "EDC915"
-set myGreen to "119C1E"
+set myOrange to "FF9900"
+set myBlue to "0000FF"
+set myYellow to "FFFF00"
+set myGreen to "0BFA0B"
 set myWhite to "FFFFFF"
 
 set SFard to {myBlack, myOrange, myBlue, myYellow, myGreen, myWhite, myWhite, myWhite, myWhite, myWhite, myWhite, myWhite}

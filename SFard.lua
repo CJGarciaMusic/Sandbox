@@ -2,9 +2,9 @@ function plugindef()
     finaleplugin.RequireSelection = false
     finaleplugin.Author = "CJ Garcia"
     finaleplugin.Copyright = "© 2019 CJ Garcia Music"
-    finaleplugin.Version = "0.1"
-    finaleplugin.Date = "8/8/2019"
-    return "SFard Notation", "SFard Notation", "Converts the selected tab region to SFard block notation"
+    finaleplugin.Version = "0.9"
+    finaleplugin.Date = "11/30/2019"
+    return "SFard Notation", "SFard Notation", "Converts the document from tab to SFard block notation"
 end
 
 function set_page_size()
@@ -64,6 +64,18 @@ function set_shapes(sfard_staff)
 
     for noteentry in eachentrysaved(sfard_staff) do
         for note in each(noteentry) do
+            if noteentry.Duration == 256 then
+                if note:CalcMIDIKey() == 0 then
+                    noteheadmod.CustomChar = 71
+                    noteheadmod:SaveAt(note)
+                end
+                for i = 1, 4 do
+                    if (note:CalcMIDIKey() == i) then
+                        noteheadmod.CustomChar = 100
+                        noteheadmod:SaveAt(note)
+                    end
+                end
+            end
             if noteentry.Duration == 512 then
                 if note:CalcMIDIKey() == 0 then
                     noteheadmod.CustomChar = 70
@@ -406,6 +418,7 @@ function create_shape_staff(tab_staff)
         staff:SetBreakTablatureLines(false)
         staff:SetFretLetters(false)
         staff:SetLowestFret(0)
+        staff:SetVerticalFretOffset(-12 * efix32)
         staff:SetShowFretboards(false)
         staff:SetLineCount(6)
         staff:SetLineSpacing(36 * efix32)
@@ -439,6 +452,10 @@ function create_shape_staff(tab_staff)
 end
 
 function create_SFard_instrument()
+    local ui = finenv.UI()
+    ui:MenuCommand(finale.MENUCMD_VIEWPAGEVIEW)
+    ui:MenuCommand(finale.MENUCMD_EDITSCORE)
+
     local tab_staves = finale.FCFretInstrumentDefs()
     tab_staves:LoadAll()
     local sf_itemno = 0
@@ -493,4 +510,34 @@ function create_SFard_instrument()
     end
 end
 
-create_SFard_instrument()
+function check_and_run()
+    local note_count = 0
+    local music_region = finenv.Region()
+    music_region:SetFullDocument()
+    for noteentry in eachentrysaved(music_region) do
+        if noteentry:IsNote() then
+            note_count = note_count + 1
+        end
+    end
+
+    if note_count == 0 then
+        finenv.UI():AlertInfo("There don't appear to be any notes in your TAB staff.\n\nPlease enter notes before running this plug-in.", nil)
+        return
+    else
+        local staff = finale.FCStaff()
+        if staff:LoadFirst() then
+            if staff:GetNotationStyle() == 2 then
+                create_SFard_instrument()
+            else
+                local not_tab = finenv.UI():AlertYesNo("Your first staff does not appear to be a TAB staff, are you sure you want to continue?\n\nContinuing may have adverse results.", "No TAB Staff Detected")
+                if not_tab == 2 then
+                    create_SFard_instrument()
+                else
+                    return
+                end
+            end
+        end
+    end
+end
+
+check_and_run()
