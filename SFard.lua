@@ -3,9 +3,14 @@ function plugindef()
     finaleplugin.Author = "CJ Garcia"
     finaleplugin.Copyright = "© 2019 CJ Garcia Music"
     finaleplugin.Version = "0.9"
-    finaleplugin.Date = "11/30/2019"
+    finaleplugin.Date = "12/01/2019"
     return "SFard Notation", "SFard Notation", "Converts the document from tab to SFard block notation"
 end
+
+local string_num = {}
+local noteentry_list = {}
+local guitar_string_midi_notes = {11.8, 9.8, 8, 6, 4, 2}
+local bass_string_midi_notes = {7.6, 5.6, 3.6, 1.6}
 
 function set_page_size()
     local distanceprefs = finale.FCDistancePrefs()
@@ -50,7 +55,7 @@ function set_page_size()
             sys:SetSpaceAbove(0)
             sys:SetSpaceAfterMusic(0)
             sys:SetSpaceBeforeMusic(0)
-            sys:SetStaffHeight( 198 * 64)
+            sys:SetStaffHeight(198 * 64)
             sys:Save()
         end
     end
@@ -69,7 +74,7 @@ function set_shapes(sfard_staff)
                     noteheadmod.CustomChar = 71
                     noteheadmod:SaveAt(note)
                 end
-                for i = 1, 4 do
+                for i = 1, 11 do
                     if (note:CalcMIDIKey() == i) then
                         noteheadmod.CustomChar = 100
                         noteheadmod:SaveAt(note)
@@ -81,7 +86,7 @@ function set_shapes(sfard_staff)
                     noteheadmod.CustomChar = 70
                     noteheadmod:SaveAt(note)
                 end
-                for i = 1, 4 do
+                for i = 1, 11 do
                     if (note:CalcMIDIKey() == i) then
                         noteheadmod.CustomChar = 99
                         noteheadmod:SaveAt(note)
@@ -93,7 +98,7 @@ function set_shapes(sfard_staff)
                     noteheadmod.CustomChar = 69
                     noteheadmod:SaveAt(note)
                 end
-                for i = 1, 4 do
+                for i = 1, 11 do
                     if (note:CalcMIDIKey() == i) then
                         noteheadmod.CustomChar = 98
                         noteheadmod:SaveAt(note)
@@ -105,7 +110,7 @@ function set_shapes(sfard_staff)
                     noteheadmod.CustomChar = 67
                     noteheadmod:SaveAt(note)
                 end
-                for i = 1, 4 do
+                for i = 1, 11 do
                     if (note:CalcMIDIKey() == i) then
                         noteheadmod.CustomChar = 96
                         noteheadmod:SaveAt(note)
@@ -117,7 +122,7 @@ function set_shapes(sfard_staff)
                     noteheadmod.CustomChar = 65
                     noteheadmod:SaveAt(note)
                 end
-                for i = 1, 4 do
+                for i = 1, 11 do
                     if (note:CalcMIDIKey() == i) then
                         noteheadmod.CustomChar = 94
                         noteheadmod:SaveAt(note)
@@ -145,229 +150,45 @@ function set_shapes(sfard_staff)
     end
 end
 
-function transpose_music(sfard_staff)
+function transpose_music(sfard_staff, num_of_strings)
+    local count = 1
     for noteentry in eachentrysaved(sfard_staff) do
         local tnm = finale.FCTablatureNoteMod()
         tnm:SetNoteEntry(noteentry)
         for note in each(noteentry) do
-            if note:CalcMIDIKey() == 40 then
-                note:SetMIDIKey(0)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note)
-            elseif note:CalcMIDIKey() == 41 then
-                note:SetMIDIKey(1)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note)
+            tnm:LoadAt(note)
+            local var_num = guitar_string_midi_notes
+            if num_of_strings == 6 then
+                var_num = guitar_string_midi_notes
+            elseif num_of_strings == 4 then
+                var_num = bass_string_midi_notes
+            end
+            local new_midi = note:CalcMIDIKey() - ((string_num[count] + var_num[string_num[count]]) * 5)
+            if new_midi > 11 then
+                new_midi = new_midi - 12
+            end
+            note:SetMIDIKey(new_midi)
+            tnm:SetStringNumber(string_num[count])
+            tnm:SaveAt(note)                
+            count = count + 1
+        end
+    end
+    for noteentry in eachentrysaved(sfard_staff) do
+        local tnm = finale.FCTablatureNoteMod()
+        tnm:SetNoteEntry(noteentry)
+        for note in each(noteentry) do
+            tnm:LoadAt(note)
+            if note:CalcMIDIKey() ~= 0 then
                 local note_boarder = noteentry:AddNewNote()
                 note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 42 then
-                note:SetMIDIKey(2)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 43 then
-                note:SetMIDIKey(3)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note) 
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 44 then
-                note:SetMIDIKey(4)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(6)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 45 then
-                note:SetMIDIKey(0)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note)
-            elseif note:CalcMIDIKey() == 46 then
-                note:SetMIDIKey(1)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 47 then
-                note:SetMIDIKey(2)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 48 then
-                note:SetMIDIKey(3)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note) 
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 49 then
-                note:SetMIDIKey(4)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(5)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 50 then
-                note:SetMIDIKey(0)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note)
-            elseif note:CalcMIDIKey() == 51 then
-                note:SetMIDIKey(1)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 52 then
-                note:SetMIDIKey(2)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 53 then
-                note:SetMIDIKey(3)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note) 
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 54 then
-                note:SetMIDIKey(4)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(4)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 55 then
-                note:SetMIDIKey(0)
-                tnm:SetStringNumber(3)
-                tnm:SaveAt(note)
-            elseif note:CalcMIDIKey() == 56 then
-                note:SetMIDIKey(1)
-                tnm:SetStringNumber(3)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(3)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 57 then
-                note:SetMIDIKey(2)
-                tnm:SetStringNumber(3)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(3)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 58 then
-                note:SetMIDIKey(3)
-                tnm:SetStringNumber(3)
-                tnm:SaveAt(note) 
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(3)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 59 then
-                note:SetMIDIKey(0)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 60 then
-                note:SetMIDIKey(1)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 61 then
-                note:SetMIDIKey(2)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 62 then
-                note:SetMIDIKey(3)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 63 then
-                note:SetMIDIKey(4)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(2)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 64 then
-                note:SetMIDIKey(0)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note)
-            elseif note:CalcMIDIKey() == 65 then
-                note:SetMIDIKey(1)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 66 then
-                note:SetMIDIKey(2)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 67 then
-                note:SetMIDIKey(3)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note_boarder)
-            elseif note:CalcMIDIKey() == 68 then
-                note:SetMIDIKey(4)
-                tnm:SetStringNumber(1)
-                tnm:SaveAt(note)
-                local note_boarder = noteentry:AddNewNote()
-                note_boarder:SetMIDIKey(0)
-                tnm:SetStringNumber(1)
+                tnm:SetStringNumber(tnm:GetStringNumber())
                 tnm:SaveAt(note_boarder)
             end
         end
     end
 end
 
-function copy_music(bottom_staff)
+function copy_music(bottom_staff, num_of_strings)
     local region = finenv.Region()
     region:SetFullDocument()
     local topstaff = region.StartStaff
@@ -392,6 +213,18 @@ function copy_music(bottom_staff)
 
     topregion:CopyMusic()
      
+    for noteentry in eachentry(topregion) do
+        table.insert(noteentry_list, noteentry)
+        local tnm = finale.FCTablatureNoteMod()
+        tnm:SetNoteEntry(noteentry)
+        if tnm:LoadFirst() then
+            for note in each(noteentry) do
+                tnm:LoadAt(note)
+                table.insert(string_num, tnm:GetStringNumber())
+            end
+        end
+    end
+     
     topregion.StartStaff = bottom_staff
     topregion.EndStaff = bottom_staff
     topregion:PasteMusic()
@@ -400,11 +233,11 @@ function copy_music(bottom_staff)
      
     region:SetInDocument()
 
-    transpose_music(bottomregion)
+    transpose_music(bottomregion, num_of_strings)
     set_shapes(bottomregion)
 end
 
-function create_shape_staff(tab_staff)
+function create_shape_staff(tab_staff, num_of_strings)
     local staffID = finale.FCStaves.Append()
     local staff = finale.FCStaff()
     local shape_staff = 0
@@ -413,14 +246,18 @@ function create_shape_staff(tab_staff)
         staff:Load(staffID)
         staff:IsTablature(true)
         staff:SetNotationStyle(finale.STAFFNOTATION_TABLATURE)
-        staff.InstrumentUUID = "1e1303c5-779b-4b96-ae9a-a15319434056"
+        if num_of_strings == 6 then
+            staff.InstrumentUUID = "1e1303c5-779b-4b96-ae9a-a15319434056"
+        elseif num_of_strings == 4 then
+            staff.InstrumentUUID = "c8bbb804-c633-467a-9b5c-4a3fed76f90e"
+        end
         staff:SetFretInstrumentDefID(tab_staff)
         staff:SetBreakTablatureLines(false)
         staff:SetFretLetters(false)
         staff:SetLowestFret(0)
         staff:SetVerticalFretOffset(-12 * efix32)
         staff:SetShowFretboards(false)
-        staff:SetLineCount(6)
+        staff:SetLineCount(num_of_strings)
         staff:SetLineSpacing(36 * efix32)
         staff:SetShowMeasureNumbers(false)
         staff:SetShowKeySignatures(false)
@@ -434,7 +271,7 @@ function create_shape_staff(tab_staff)
         staff:SetShowPartStaffNames(false)
         staff:SetShowRests(false)
         string = finale.FCString()
-        string.LuaString = "Shape Tab"
+        string.LuaString = tostring(num_of_strings).."-String Shape Tab"
         staff:SaveNewFullNameString(string)
         staff:Save()
         shape_staff = staff:GetItemNo()
@@ -448,10 +285,10 @@ function create_shape_staff(tab_staff)
     playbackdata:Save()
     staff:Load(0)
     staff:SetHideMode(finale.STAFFHIDE_CUTAWAY)
-    copy_music(shape_staff)
+    copy_music(shape_staff, num_of_strings)
 end
 
-function create_SFard_instrument()
+function create_SFard_instrument(inst_type)
     local ui = finenv.UI()
     ui:MenuCommand(finale.MENUCMD_VIEWPAGEVIEW)
     ui:MenuCommand(finale.MENUCMD_EDITSCORE)
@@ -459,16 +296,30 @@ function create_SFard_instrument()
     local tab_staves = finale.FCFretInstrumentDefs()
     tab_staves:LoadAll()
     local sf_itemno = 0
-    local count = 0
     for ts in each(tab_staves) do
-        count = count + 1
-        if ts:GetStringTuning(1) == 0 then
-            if ts:GetStringTuning(2) == 0 then
-                if ts:GetStringTuning(3) == 0 then
-                    if ts:GetStringTuning(4) == 0 then
-                        if ts:GetStringTuning(5) == 0 then
-                            if ts:GetStringTuning(6) == 0 then
+        if inst_type == 4 then
+            if ts:GetStringCount() == 4 then
+                if ts:GetStringTuning(1) == 0 then
+                    if ts:GetStringTuning(2) == 0 then
+                        if ts:GetStringTuning(3) == 0 then
+                            if (ts:GetStringTuning(4) == 0) then
                                 sf_itemno = ts:GetItemNo()
+                            end
+                        end
+                    end
+                end
+            end
+        elseif inst_type == 6 then
+            if ts:GetStringCount() == 6 then
+                if ts:GetStringTuning(1) == 0 then
+                    if ts:GetStringTuning(2) == 0 then
+                        if ts:GetStringTuning(3) == 0 then
+                            if (ts:GetStringTuning(4) == 0) then
+                                if ts:GetStringTuning(5) == 0 then
+                                    if ts:GetStringTuning(6) == 0 then
+                                        sf_itemno = ts:GetItemNo()
+                                    end
+                                end
                             end
                         end
                     end
@@ -477,16 +328,24 @@ function create_SFard_instrument()
         end
     end
     if sf_itemno == 0 then
+        local tab_staves = finale.FCFretInstrumentDefs()
+        tab_staves:LoadAll()
+        local tab_to_load = 0
+        for ts in each(tab_staves) do
+            if ts:GetStringCount() == inst_type then
+                tab_to_load = ts:GetItemNo()
+            end
+        end
         local tab_staff = finale.FCFretInstrumentDef()
-        tab_staff:Load(1)
+        tab_staff:Load(tab_to_load)
         local string = finale.FCString()
-        string.LuaString = "SFard"
+        string.LuaString = "SFard ("..tostring(inst_type).."-String)"
         tab_staff:SetName(string)
-        for i = 1, 6 do
+        for i = 1, inst_type do
             tab_staff:SetStringTuning(i, 0)
         end
         tab_staff:SaveNew()
-        create_shape_staff(tab_staff:GetItemNo())
+        create_shape_staff(tab_staff:GetItemNo(), inst_type)
     else
         local staves = finale.FCStaves()
         staves:LoadAll()
@@ -496,7 +355,7 @@ function create_SFard_instrument()
             music_region:SetFullDocument()
             music_region:SetStartStaff(s.ItemNo)
             music_region:SetEndStaff(s.ItemNo)
-            for noteentry in eachentry(finenv.Region()) do
+            for noteentry in eachentry(music_region) do
                 local nm = finale.FCNoteheadMod()
                 nm:SetNoteEntry(noteentry)
                 if nm:LoadFirst() then
@@ -506,7 +365,7 @@ function create_SFard_instrument()
                 end
             end
         end
-        copy_music(sf_staff)
+        copy_music(sf_staff, inst_type)
     end
 end
 
@@ -525,16 +384,14 @@ function check_and_run()
         return
     else
         local staff = finale.FCStaff()
-        if staff:LoadFirst() then
+        if staff:LoadFirst() then 
             if staff:GetNotationStyle() == 2 then
-                create_SFard_instrument()
+                local num_of_string = staff:CreateFretInstrumentDef()
+                num_of_string:GetStringCount()
+                create_SFard_instrument(num_of_string:GetStringCount())
             else
-                local not_tab = finenv.UI():AlertYesNo("Your first staff does not appear to be a TAB staff, are you sure you want to continue?\n\nContinuing may have adverse results.", "No TAB Staff Detected")
-                if not_tab == 2 then
-                    create_SFard_instrument()
-                else
-                    return
-                end
+                local not_tab = finenv.UI():AlertInfo("Your first staff does not appear to be a TAB staff.\n\nPlease start with a TAB staff and try again.", "No TAB Staff Detected")
+                return
             end
         end
     end
