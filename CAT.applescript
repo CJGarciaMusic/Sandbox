@@ -33,4 +33,4 @@ on subMenuItem(theMenuName, theMenuItemName, theSubMenuItem)
 	end try
 end subMenuItem
 
-subMenuItem("Plug-ins", "JW Lua", "SFard Notation")
+subMenuItem("Plug-ins", "JW Lua", "Color Adapted Tab")

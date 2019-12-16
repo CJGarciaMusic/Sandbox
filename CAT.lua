@@ -2,9 +2,9 @@ function plugindef()
     finaleplugin.RequireSelection = false
     finaleplugin.Author = "CJ Garcia"
     finaleplugin.Copyright = "© 2019 CJ Garcia Music"
-    finaleplugin.Version = "0.9"
-    finaleplugin.Date = "12/01/2019"
-    return "SFard Notation", "SFard Notation", "Converts the document from tab to SFard block notation"
+    finaleplugin.Version = "1.0"
+    finaleplugin.Date = "12/13/2019"
+    return "Color Adapted Tab", "Color Adapted Tab", "Converts the document from standard TAB to Sarah Fard's Color Adapted Tab notation."
 end
 
 local string_num = {}
@@ -62,7 +62,7 @@ function set_page_size()
 end
 
 function set_shapes(sfard_staff)
-    local newfont = "SFard"
+    local newfont = "Color Adapted Tab"
     local noteheadmod = finale.FCNoteheadMod()
     noteheadmod:SetUseCustomFont(true)
     noteheadmod.FontName = newfont
