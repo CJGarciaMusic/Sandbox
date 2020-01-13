@@ -3,7 +3,7 @@
   <head>
     <style>
       #map {
-        height: 400px;
+        height: 450px;
         width: 100%;
        }
         .column {
@@ -13,6 +13,8 @@
     </style>
   </head>
   <body>
+      <div id="charter-count">
+      </div></br>
     <div id="map"></div><br/>
     <div class="column">
         <div id="hawaii-list">
@@ -115,6 +117,7 @@
     </div>
 
     <script>
+        var state_total = 0;
         var hawaii_schools = ["Chiefess Kamakahelei Middle School"];
         var cali_schools = ["Bullard High School", "Canyon High School", "Capistrano Valley High School",
         "Carr Intermediate School", "Edison High School (Fresno)", "Edison High School (OC)",
@@ -129,7 +132,48 @@
         var northd_schools = ["Century High School", "Horizon Middle School"];
         var arizona_schools = ["Arizona State University", "Brophy College Preparatory", "Campo Verde High School (Band)",
         "Campo Verde High School (Orchestra)", "Catalina Foothills High School", "Desert Vista High School",
-        "Dobson High School", "Greenfield Junior High"];
+        "Dobson High School", "Greenfield Junior High", "Highland High School (Band)",
+        "Highland High School (Orchestra)", "Holbrook High School", "Mountain Pointe High School",
+        "Mountain Ridge High School", "Norther Arizona University", "Rhodes Junior High (Band)",
+        "Rhodes Junior High (Orchestra)", "South Valley Junior High", "Tempe High School (Band)",
+        "Tempe High School (Orchestra)", "Westwood High School"];
+        var kansas_schools = ["Olathe Sough High School", "Olathe Northwest High School"];
+        var minnesota_schools = ["Coon Rapids High School"];
+        var missouri_schools = ["Parkway Central Middle School", "Sullivan High School"];
+        var wisconsin_schools = ["Germantown High School"];
+        var oklahoma_schools = ["Norman High School"];
+        var texas_schools = ["Arlington High School", "Dallas Winds", "Gainesville High School",
+        "Lincoln Middle School", "Lovejoy High School", "Marcus High School",
+        "Plano East High School", "SSG Puentes Middle Shcool", "Tomball High School"];
+        var illinois_schools = ["Creekside Middle School", "Joliet Central High School", "Northbrook Junior High (Band)",
+        "Northbrook Junior High (Orchestra)", "Plainfield South High School"];
+        var indiana_schools = ["Ball State University", "Carmel High School", "Elkhart Central High School",
+        "Hamilton Southeast High School", "Hobart Middle School", "Indian Creek High School",
+        "Shelbyville Middle School", "Zionsville Middle School"];
+        var michigan_schools = ["Lincoln Senior High School", "Roosevelt High School"];
+        var louisiana_schools = ["Denham Springs High School"];
+        var ohio_schools = ["Centerville High School (Band)", "Centerville High School (Orchestra)", "Milford High School"];
+        var kentucky_schools = ["Daviess County High School"];
+        var tennessee_schools = ["Belmont University", "Hendersonville High School", "Humbolt High School",
+        "McMinn County High School", "Ocoee Middle School", "Wilson Central High School"];
+        var alabama_schools = ["Auburn University", "North Jefferson Middle School", "Vestavia Hills High School"];
+        var southca_schools = ["Dreher High School", "Dutchman Creek Middle School", "Swansea High School"];
+        var massachusetts_schools = ["Berklee College of Music", "Billerica High School"];
+        var rhodei_schools = ["Ponaganset High School", "Woonsocket High School"];
+        var connecticut_schools = ["Henry James Middle School", "East Windsor Middle School"];
+        var ny_schools = ["Hendrick Hudson High School"];
+        var pennsylvania_schools = ["Indiana Area Senior High School"];
+        var maryland_schools = ["Cedar Chapel Special School", "Snow Hill Middle School", "St. Michael's Middle High School"];
+        var virginia_schools = ["Battlefield High School", "Broadway High School", "Daniel Morgan Middle School",
+        "???Freedom High School???", "Harrisonburg High School", "John Champe High School",
+        "Langley High School", "Yorktown High School"];
+        var northca_schools = ["Ashley High School", "Hickory High School", "Hough High School",
+        "North Wilkes High School", "Western Carolina University"];
+        var georgia_schools = ["Centennial High School", "Kell High School", "Hillgrove High School",
+        "North Cobb High School (Band)", "North Cobb High School (Orchestra)", "Roswell High School (Band)",
+        "Roswell High School (Orchestra)", "Westlake High School"];
+        var florida_schools = ["Lake Asbury Junior High"];
+
         function buildHTML(){
             var school_total = 0;
             for (i = 0; i < hawaii_schools.length; i++) { 
@@ -137,28 +181,182 @@
                 div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+hawaii_schools[i]+"</a></small><br/>";
                 school_total++;       
             }
+            state_total++;
             for (i = 0; i < cali_schools.length; i++) { 
                 var div = document.getElementById('california-list');
                 div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+cali_schools[i]+"</a></small><br/>";
                 school_total++;       
             }
+            state_total++;
             for (i = 0; i < northd_schools.length; i++) { 
                 var div = document.getElementById('northdakota-list');
                 div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+northd_schools[i]+"</a></small><br/>";
                 school_total++;       
             }
+            state_total++;
             for (i = 0; i < arizona_schools.length; i++) { 
                 var div = document.getElementById('arizona-list');
                 div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+arizona_schools[i]+"</a></small><br/>";
                 school_total++;        
             }
+            state_total++;
+            for (i = 0; i < kansas_schools.length; i++) { 
+                var div = document.getElementById('kansas-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+kansas_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < minnesota_schools.length; i++) { 
+                var div = document.getElementById('minnesota-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+minnesota_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < missouri_schools.length; i++) { 
+                var div = document.getElementById('missouri-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+missouri_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < wisconsin_schools.length; i++) { 
+                var div = document.getElementById('wisconsin-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+wisconsin_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < oklahoma_schools.length; i++) { 
+                var div = document.getElementById('oklahoma-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+oklahoma_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < texas_schools.length; i++) { 
+                var div = document.getElementById('texas-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+texas_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < illinois_schools.length; i++) { 
+                var div = document.getElementById('illinois-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+illinois_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < indiana_schools.length; i++) { 
+                var div = document.getElementById('indiana-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+indiana_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < michigan_schools.length; i++) { 
+                var div = document.getElementById('michigan-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+michigan_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < louisiana_schools.length; i++) { 
+                var div = document.getElementById('louisiana-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+louisiana_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < ohio_schools.length; i++) { 
+                var div = document.getElementById('ohio-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+ohio_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < kentucky_schools.length; i++) { 
+                var div = document.getElementById('kentucky-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+kentucky_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < tennessee_schools.length; i++) { 
+                var div = document.getElementById('tennessee-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+tennessee_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < alabama_schools.length; i++) { 
+                var div = document.getElementById('alabama-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+alabama_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < southca_schools.length; i++) { 
+                var div = document.getElementById('southca-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+southca_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < massachusetts_schools.length; i++) { 
+                var div = document.getElementById('massachusetts-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+massachusetts_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < rhodei_schools.length; i++) { 
+                var div = document.getElementById('rhodei-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+rhodei_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < connecticut_schools.length; i++) { 
+                var div = document.getElementById('connecticut-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+connecticut_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < ny_schools.length; i++) { 
+                var div = document.getElementById('ny-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+ny_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i < pennsylvania_schools.length; i++) { 
+                var div = document.getElementById('pennsylvania-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+pennsylvania_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i <  maryland_schools.length; i++) { 
+                var div = document.getElementById('maryland-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+maryland_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i <  virginia_schools.length; i++) { 
+                var div = document.getElementById('virginia-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+virginia_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i <  northca_schools.length; i++) { 
+                var div = document.getElementById('northca-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+northca_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i <  georgia_schools.length; i++) { 
+                var div = document.getElementById('georgia-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+georgia_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
+            for (i = 0; i <  florida_schools.length; i++) { 
+                var div = document.getElementById('florida-list');
+                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+florida_schools[i]+"</a></small><br/>";
+                school_total++;        
+            }
+            state_total++;
         }
         
         var map;
         var markers = [];
         
         function initMap() {
-            map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: {lat: 33.396675, lng: -111.719309}});
+            map = new google.maps.Map(document.getElementById('map'), {zoom: 4, center: {lat: 39.8283, lng: -98}});
             var goldStar = "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1502-shape_star_4x.png&highlight=ff000000,FFD600&scale=1.0";
             var redStar = "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1502-shape_star_4x.png&highlight=ff000000,A52714&scale=1.0";
             var blueStar = "https://mt.googleapis.com/vt/icon/name=icons/onion/SHARED-mymaps-container-bg_4x.png,icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1502-shape_star_4x.png&highlight=ff000000,0288D1&scale=1.0";
@@ -203,7 +401,101 @@
                 [arizona_schools[4], "https://cfhs.cfsd16.org/", 32.306384, -110.899721, blueStar],
                 [arizona_schools[5], "https://www.tempeunion.org/desertvista", 33.295489, -112.017082, blueStar],
                 [arizona_schools[6], "http://www.mpsaz.org/dobson", 33.362472, -111.867890, blueStar],
-                [arizona_schools[7], "https://www.gilbertschools.net/greenfieldjunior", 33.348706, -111.737046, redStar]];
+                [arizona_schools[7], "https://www.gilbertschools.net/greenfieldjunior", 33.348706, -111.737046, redStar],
+                [arizona_schools[8], "https://www.gilbertschools.net/highlandhigh", 33.363632, -111.698045, blueStar],
+                [arizona_schools[9], "https://www.gilbertschools.net/highlandhigh", 33.363632, -111.698045, blueStar],
+                [arizona_schools[10], "http://www.holbrook.k12.az.us/holbrookhighschool_home.aspx", 34.905670, -110.169622, blueStar],
+                [arizona_schools[11], "https://www.tempeunion.org/MountainPointe", 33.325949, -111.990639, blueStar],
+                [arizona_schools[12], "https://www.dvusd.org/Domain/41", 33.689874, -112.204215, blueStar],
+                [arizona_schools[13], "https://nau.edu/?utm_source=google%20maps&utm_medium=organic", 35.180438, -111.653970, goldStar],
+                [arizona_schools[14], "http://www.mpsaz.org/rhodes", 33.380151, -111.870453, redStar],
+                [arizona_schools[15], "http://www.mpsaz.org/rhodes", 33.380151, -111.870453, redStar],
+                [arizona_schools[16], "https://www.gilbertschools.net/southvalleyjunior", 33.313180, -111.773613, redStar],
+                [arizona_schools[17], "https://www.tempeunion.org/tempehigh", 33.409191, -111.941070, blueStar],
+                [arizona_schools[18], "https://www.tempeunion.org/tempehigh", 33.409191, -111.941070, blueStar],
+                [arizona_schools[19], "http://www.mpsaz.org/westwood", 33.428959, -111.849542, blueStar],
+                [kansas_schools[0], "https://www.olatheschools.org/south/", 38.855996, -94.792389, blueStar],
+                [kansas_schools[1], "https://www.olatheschools.org/northwest", 38.929231, -94.832273, blueStar],
+                [minnesota_schools[0], "https://www.ahschools.us/crhs", 45.181962, -93.326343, blueStar],
+                [missouri_schools[0], "https://www.parkwayschools.net/Domain/26", 38.668182, -90.503800, redStar],
+                [missouri_schools[1], "http://www.sullivaneagles.org/high-school", 38.216068, -91.138092, blueStar],
+                [wisconsin_schools[0], "https://www.germantownschools.org/schools/high/", 43.226185, -88.134684, blueStar],
+                [oklahoma_schools[0], "https://www.normanpublicschools.org/normanhigh", 35.218873, -97.456075, blueStar],
+                [texas_schools[0], "https://www.aisd.net/arlington-high-school/", 32.720105, -97.117378, blueStar],
+                [texas_schools[1], "https://dallaswinds.org/", 32.789907, -96.798605, goldStar],
+                [texas_schools[2], "https://www.gainesvilleisd.org/ghs", 33.604510, -97.161078, blueStar],
+                [texas_schools[3], "https://www.episd.org/lincoln", 31.852601, -106.594457, redStar],
+                [texas_schools[4], "https://lhs.lovejoyisd.net/", 33.101955, -96.613480, blueStar],
+                [texas_schools[5], "https://www.lisd.net/mhs", 33.063561, -97.062910, blueStar],
+                [texas_schools[6], "https://www.pisd.edu/pesh", 33.039637, -96.645583, blueStar],
+                [texas_schools[7], "https://www.sisd.net/puentesms", 31.790671, -106.223998, redStar],
+                [texas_schools[8], "https://ths.tomballisd.net/", 30.111549, -95.628344, blueStar],
+                [illinois_schools[0], "https://www.woodstockschools.org/creekside", 42.278641, -88.444096, redStar],
+                [illinois_schools[1], "https://www.jths.org/", 41.525467, -88.074775, blueStar],
+                [illinois_schools[2], "http://northbrook28-juniorhigh.ss9.sharpschool.com/", 42.124676, -87.816382, redStar],
+                [illinois_schools[3], "http://northbrook28-juniorhigh.ss9.sharpschool.com/", 42.124676, -87.816382, redStar],
+                [illinois_schools[4], "http://pshs.psd202.org/", 41.562527, -88.272737, blueStar],
+                [indiana_schools[0], "https://www.bsu.edu/", 40.204961, -85.406284, goldStar],
+                [indiana_schools[1], "https://www.ccs.k12.in.us/chs", 39.979897, -86.119423, blueStar],
+                [indiana_schools[2], "http://elkhart.k12.in.us/centralhs/", 41.684812, -85.958889, blueStar],
+                [indiana_schools[3], "https://hhs.hseschools.org/", 39.970583, -85.917208, blueStar],
+                [indiana_schools[4], "https://www.hobart.k12.in.us/", 41.526182, -87.258345, redStar],
+                [indiana_schools[5], "https://www.indiancreekschools.com/", 39.407322, -86.160742, blueStar],
+                [indiana_schools[6], "https://scs.shelbycs.org/", 39.506565, -85.793373, redStar],
+                [indiana_schools[7], "https://zms.zcs.k12.in.us/", 39.960971, -86.283295, redStar],
+                [michigan_schools[0], "https://www.lincolnk12.org/", 42.158624, -83.611057, blueStar],
+                [michigan_schools[1], "https://www.wyandotte.org/calendars/roosevelt-high-school-calendar", 42.200086, -83.157721, blueStar],
+                [louisiana_schools[0], "https://www.denhamspringshs.org/", 30.496764, -90.955478, blueStar],
+                [ohio_schools[0], "https://www.centerville.k12.oh.us/schools/chs", 39.626970, -84.148166, blueStar],
+                [ohio_schools[1], "https://www.centerville.k12.oh.us/schools/chs", 39.626970, -84.148166, blueStar],
+                [ohio_schools[2], "https://www.milfordschools.org/", 39.179763, -84.241078, blueStar],
+                [kentucky_schools[0], "http://www.dchs.dcps.org/", 37.729864, -87.084744, blueStar],
+                [tennessee_schools[0], "http://www.belmont.edu/", 36.132907, -86.794169, goldStar],
+                [tennessee_schools[1], "https://hhs.sumnerschools.org/", 36.303366, -86.605466, blueStar],
+                [tennessee_schools[2], "http://hhs.hcsvikings.org/", 35.840678, -88.906578, blueStar],
+                [tennessee_schools[3], "https://www.mcminnhighschool.com/", 35.441647, -84.633035, blueStar],
+                [tennessee_schools[4], "https://oms.bradleyschools.org/", 35.174409, -84.867661, redStar],
+                [tennessee_schools[5], "https://www.wcschools.com/wchs", 36.133990, -86.395230, blueStar],
+                [alabama_schools[0], "http://www.auburn.edu/", 32.593330, -85.495134, goldStar],
+                [alabama_schools[1], "https://www.jefcoed.com/", 33.779505, -86.804142, redStar],
+                [alabama_schools[2], "https://www.vestavia.k12.al.us/", 33.419681, -86.780507, blueStar],
+                [southca_schools[0], "https://www.richlandone.org/Domain/47", 33.999017, -80.993885, blueStar],
+                [southca_schools[1], "https://www.rock-hill.k12.sc.us/Domain/26", 35.008846, -81.065655, redStar],
+                [southca_schools[2], "https://www.lex4.org/shs", 33.736744, -81.093826, blueStar],
+                [massachusetts_schools[0], "https://www.berklee.edu/", 42.346595, -71.089529, goldStar],
+                [massachusetts_schools[1], "https://www.billericak12.com/schools/billerica-memorial-high-school", 42.560390, -71.274216, blueStar],
+                [rhodei_schools[0], "http://www.fg.k12.ri.us/", 41.865586, -71.714850, blueStar],
+                [rhodei_schools[1], "http://whs.woonsocketschools.com/", 42.004030, -71.485202, blueStar],
+                [connecticut_schools[0], "https://www.simsbury.k12.ct.us/schools/hjms", 41.883939, -72.814191, redStar],
+                [connecticut_schools[1], "https://www.eastwindsork12.org/", 41.921956, -72.546459, redStar],
+                [ny_schools[0], "https://www.henhudschools.org/", 41.254430, -73.935063, blueStar],
+                [pennsylvania_schools[0], "https://sh.iasd.cc/", 40.632620, -79.150415, blueStar],
+                [maryland_schools[0], "http://worcesterccss.ss11.sharpschool.com/", 38.166818, -75.395721, redStar],
+                [maryland_schools[1], "http://www.snowhillmiddleschool.com/", 38.167118, -75.397374, redStar],
+                [maryland_schools[2], "https://www.tcps.k12.md.us/", 38.780109, -76.217293, blueStar],
+                [virginia_schools[0], "https://battlefieldhs.pwcs.edu/", 38.845324, -77.629775, blueStar],
+                [virginia_schools[1], "http://bhs.rockingham.k12.va.us/", 38.605600, -78.794781, blueStar],
+                [virginia_schools[2], "https://www.wps.k12.va.us/Domain/10", 39.179110, -78.150421, redStar],
+                [virginia_schools[3], "https://www.lcps.org/FHS", 38.914147, -77.535037, blueStar],
+                [virginia_schools[4], "https://www.harrisonburg.k12.va.us/hhs", 38.442598, -78.909988, blueStar],
+                [virginia_schools[5], "https://www.lcps.org/jch", 38.932358, -77.565856, blueStar],
+                [virginia_schools[6], "https://langleyhs.fcps.edu/", 38.949779, -77.166805, blueStar],
+                [virginia_schools[7], "https://yhs.apsva.us/", 38.903118, -77.140303, blueStar],
+                [northca_schools[0], "https://ashley.nhcs.net/", 34.100631, -77.910903, blueStar],
+                [northca_schools[1], "http://hickoryhigh.hickoryschools.net/", 35.749359, -81.332150, blueStar],
+                [northca_schools[2], "https://schools.cms.k12.nc.us/williamamoshoughHS/Pages/Default.aspx", 35.467192, -80.828578, blueStar],
+                [northca_schools[3], "https://nwhs.wilkescountyschools.org/", 36.282435, -81.098358, blueStar],
+                [northca_schools[4], "https://www.wcu.edu/", 35.309380, -83.184411, goldStar],
+                [georgia_schools[0], "https://www.fultonschools.org/CentennialHS", 34.007046, -84.290842, blueStar],
+                [georgia_schools[1], "http://www.cobbk12.org/kell/", 34.064255, -84.513114, blueStar],
+                [georgia_schools[2], "https://www.hillgrovehighschool.org/", 33.926047, -84.667240, blueStar],
+                [georgia_schools[3], "https://www.northcobbhigh.org/", 34.040129, -84.648596, blueStar],
+                [georgia_schools[4], "https://www.northcobbhigh.org/", 34.040129, -84.648596, blueStar],
+                [georgia_schools[5], "https://roswellhornets.org/", 34.062985, -84.381510, blueStar],
+                [georgia_schools[5], "https://roswellhornets.org/", 34.062985, -84.381510, blueStar],
+                [georgia_schools[6], "https://www.fultonschools.org/westlakehs", 33.689245, -84.575801, blueStar],
+                [florida_schools[0], "https://www.oneclay.net/laj", 30.045414, -81.803653, redStar]];
+                
             function school_info(list_num){
                 var contentString = '<!DOCTYPE html>'+
                     '<html>'+
@@ -219,7 +511,6 @@
                     position: new google.maps.LatLng(lat, lon),
                     map: map,
                     icon: icon_type
-                    // icon: "http://maps.google.com/mapfiles/ms/icons/"+icon_type+".png"
                 });
                 
                 newmarker['infowindow'] = new google.maps.InfoWindow({
@@ -238,7 +529,24 @@
 
             var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-        }
+
+            var yellow_count = 0;
+            var blue_count = 0;
+            var red_count = 0;
+
+            for (i = 0; i < school_name.length; i++) {
+                if (school_name[i][4] == blueStar) {
+                    blue_count++
+                } else if (school_name[i][4] == goldStar) {
+                    yellow_count++
+                } else if (school_name[i][4] == redStar) {
+                    red_count++
+                }
+            }   
+            var high_school_count = document.getElementById("charter-count");
+                high_school_count.innerHTML = "<h1 align='center'>" + school_name.length + " Chapters | " + state_total + " States</h1>"+
+                "<h1 align='center'>" + yellow_count + " Universities | " + blue_count + " High Schools | " + red_count + " Middle Schools</h1>";
+            }
         function gotoPoint(myPoint){
             map.setCenter(new google.maps.LatLng(markers[myPoint].position.lat(), markers[myPoint].position.lng()));
             map.setZoom(17);
