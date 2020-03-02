@@ -1,9 +1,9 @@
 function plugindef()
     finaleplugin.RequireSelection = false
     finaleplugin.Author = "CJ Garcia"
-    finaleplugin.Copyright = "© 2019 CJ Garcia Music"
+    finaleplugin.Copyright = "© 2020 CJ Garcia Music"
     finaleplugin.Version = "1.0"
-    finaleplugin.Date = "12/13/2019"
+    finaleplugin.Date = "03/01/2020"
     return "Color Adapted Tab", "Color Adapted Tab", "Converts the document from standard TAB to Sarah Fard's Color Adapted Tab notation."
 end
 
