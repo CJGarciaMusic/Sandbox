@@ -22,7 +22,7 @@ local measure = finale.FCMeasure()
         for addstaff = 1, staff_numbers[#staff_numbers] do
             music_region:SetStartStaff(addstaff)
             music_region:SetEndStaff(addstaff)
-            print("<staff n=\""..addstaff.."\">")
+            print("     <staff n=\""..addstaff.."\">")
             local layer_numbers = {false, false, false, false}
             for noteentry in eachentrysaved(music_region) do
                 if noteentry:GetLayerNumber() == 1 then
@@ -37,13 +37,13 @@ local measure = finale.FCMeasure()
             end
             for k, v in pairs(layer_numbers) do
                 if v == true then
-                    print("<layer n=\""..k.."\">")
+                    print("         <layer n=\""..k.."\">")
                     local note_count = 0
                     for noteentry in eachentrysaved(music_region) do
                         note_count = note_count + 1  
                     end
                     if note_count == 0 then
-                        print("<mRest/>")
+                        print("             <mRest/>")
                     else
                         for noteentry in eachentrysaved(music_region) do
                             for note in each(noteentry) do
@@ -56,14 +56,14 @@ local measure = finale.FCMeasure()
                                 local note_name = string.lower(note:CalcPitchChar())
                                 local note_octave = note:CalcOctave(key_sig, 0)
                                 local note_string = " dur=\""..note_dur[noteentry:GetDuration()].."\" dur.ges=\""..(noteentry:GetDuration() / 4).."p\" oct=\""..note_octave.."\" pname=\""..note_name.."\""
-                                print("<note"..dotted..note_string..">")
+                                print("                 <note"..dotted..note_string..">")
                             end
                         end
                     end
-                    print("</layer>")
+                    print("             </layer>")
                 end
             end
-        print("</staff>")
+        print("         </staff>")
     end
     print("</measure>")
 end
