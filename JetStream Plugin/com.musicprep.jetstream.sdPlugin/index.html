@@ -19,26 +19,27 @@
 
 			type: "com.elgato.numberdisplay.action",
 
-			onKeyDown: function (context, settings, coordinates, userDesiredState) {
+			onKeyDown: function (context, settings, coordinates, userDesiredState, displayAction) {
+				alert("Did it work?\r\r" + displayAction);
 			},
 
-			onKeyUp: function (context, settings, coordinates, userDesiredState) {
+			onKeyUp: function (context, settings, coordinates, userDesiredState, displayAction) {
 
-				var keyPressCounter = 0;
-				if (settings != null && settings.hasOwnProperty('keyPressCounter')) {
-					keyPressCounter = settings["keyPressCounter"];
-				}
+				// var keyPressCounter = displayAction;
+				// if (settings != null && settings.hasOwnProperty('keyPressCounter')) {
+				// 	keyPressCounter = settings["keyPressCounter"];
+				// }
 
-				keyPressCounter++;
-				keyPressCounter = keyPressCounter % 10;
+				// keyPressCounter++;
+				// keyPressCounter = keyPressCounter % 10;
 
-				updatedSettings = {};
-				updatedSettings["keyPressCounter"] = keyPressCounter;
-				settingsCache[context] = updatedSettings;
+				// updatedSettings = {};
+				// updatedSettings["keyPressCounter"] = keyPressCounter;
+				// settingsCache[context] = updatedSettings;
 
-				this.SetSettings(context, updatedSettings);
+				this.SetSettings(context, displayAction);
 
-				this.SetTitle(context, keyPressCounter);
+				// this.SetTitle(context, keyPressCounter);
 			},
 
 			onWillAppear: function (context, settings, coordinates) {
@@ -111,7 +112,9 @@
 					var settings = jsonPayload['settings'];
 					var coordinates = jsonPayload['coordinates'];
 					var userDesiredState = jsonPayload['userDesiredState'];
-					numberdisplayAction.onKeyDown(context, settings, coordinates, userDesiredState);
+					var displayAction = jsonPayload.setValue;
+					numberdisplayAction.onKeyDown(context, settings, coordinates, userDesiredState, displayAction);
+					// numberdisplayAction.SetTitle(context, displayAction);
 				}
 				else if (event == "keyUp") {
 					var settings = jsonPayload['settings'];

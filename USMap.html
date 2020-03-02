@@ -545,7 +545,7 @@
             }   
             var high_school_count = document.getElementById("charter-count");
                 high_school_count.innerHTML = "<h1 align='center'>" + school_name.length + " Chapters | " + state_total + " States</h1>"+
-                "<h1 align='center'>" + yellow_count + " Universities | " + blue_count + " High Schools | " + red_count + " Middle Schools</h1>";
+                "<h1 align='center'><small>" + yellow_count + " Universities | " + blue_count + " High Schools | " + red_count + " Middle Schools</small></h1>";
             }
         function gotoPoint(myPoint){
             map.setCenter(new google.maps.LatLng(markers[myPoint].position.lat(), markers[myPoint].position.lng()));

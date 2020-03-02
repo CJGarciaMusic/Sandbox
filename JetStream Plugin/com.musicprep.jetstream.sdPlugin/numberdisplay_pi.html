@@ -195,6 +195,7 @@
                     payload[param] = value;
                 }
                 $SD.api.sendToPlugin(uuid, pluginAction, payload);
+                $SD.api.keyDown(uuid, pluginAction, payload);
             }
         }
 

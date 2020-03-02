@@ -1,0 +1,1 @@
+/Users/cgarcia/CJGit/Sandbox/JetStream\ Plugin/DistributionTool -b -i /Users/cgarcia/CJGit/Sandbox/JetStream\ Plugin/com.musicprep.jetstream.sdPlugin -o /Users/cgarcia/CJGit/Sandbox/JetStream\ Plugin/MacBuild

@@ -12,6 +12,50 @@ local noteentry_list = {}
 local guitar_string_midi_notes = {11.8, 9.8, 8, 6, 4, 2}
 local bass_string_midi_notes = {7.6, 5.6, 3.6, 1.6}
 
+function set_systems()
+    local music_region = finenv.Region()
+    music_region:SetFullDocument()
+    local mspan = music_region:CalcMeasureSpan()
+    local every_fourth = {}
+    for index = 1, mspan do
+        if (index % 4) == 0 then
+            table.insert(every_fourth, index)
+        end
+    end
+
+    local staff_system = finale.FCStaffSystem()
+
+    for key, value in pairs(every_fourth) do
+        finale.FCStaffSystems.UpdateFullLayout()
+        if staff_system:Load(key) then
+            local freeze_staff = staff_system:CreateFreezeSystem(true)
+            if freeze_staff ~= nil then
+                freeze_staff:SetNextSysMeasure(value + 1)
+                freeze_staff:Save()
+            end
+        end
+    end
+
+    local last_system = music_region:GetEndMeasure() - every_fourth[#every_fourth]
+    if last_system < 4 then
+        if staff_system:Load((#every_fourth) + 1) then
+            local freeze_staff = staff_system:CreateFreezeSystem(true)
+            if freeze_staff ~= nil then
+                freeze_staff:Save()
+            end
+            if last_system == 3 then
+                staff_system:SetRightMargin(-464)
+            elseif last_system == 2 then
+                staff_system:SetRightMargin(-944)
+            elseif last_system == 1 then
+                staff_system:SetRightMargin(-1410)
+            end
+            staff_system:Save()
+        end
+    end
+    finale.FCStaffSystems.UpdateFullLayout()
+end
+
 function set_page_size()
     local distanceprefs = finale.FCDistancePrefs()
     distanceprefs:Load(1)
@@ -388,7 +432,9 @@ function check_and_run()
             if staff:GetNotationStyle() == 2 then
                 local num_of_string = staff:CreateFretInstrumentDef()
                 num_of_string:GetStringCount()
+                set_systems()
                 create_SFard_instrument(num_of_string:GetStringCount())
+                set_systems()
             else
                 local not_tab = finenv.UI():AlertInfo("Your first staff does not appear to be a TAB staff.\n\nPlease start with a TAB staff and try again.", "No TAB Staff Detected")
                 return
