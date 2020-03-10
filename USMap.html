@@ -6,114 +6,102 @@
         height: 450px;
         width: 100%;
        }
-        .column {
+        /* .column {
             float: left;
             width: 16.66%;
-        }
+        } */
     </style>
   </head>
   <body>
       <div id="charter-count">
       </div></br>
     <div id="map"></div><br/>
-    <div class="column">
-        <div id="hawaii-list">
-            <h4>Hawaii</h4>
-        </div>
-        <div id="california-list">
-            <h4>California</h4>
-        </div>
-        <div id="northdakota-list">
-            <h4>North Dakota</h4>
-        </div>
+    <div id="hawaii-list">
+        <h3>Hawaii</h3>
     </div>
-    <div class="column">
-        <div id="arizona-list">
-            <h4>Arizona</h4>
-        </div>
-        <div id="kansas-list">
-            <h4>Kansas</h4>
-        </div>
+    <div id="california-list">
+        <h3>California</h3>
     </div>
-    <div class="column">
-        <div id="minnesota-list">
-            <h4>Minnesota</h4>
-        </div>
-        <div id="missouri-list">
-            <h4>Missouri</h4>
-        </div>
-        <div id="wisconsin-list">
-            <h4>Wisconsin</h4>
-        </div>
-        <div id="oklahoma-list">
-            <h4>Oklahoma</h4>
-        </div>
-        <div id="texas-list">
-            <h4>Texas</h4>
-        </div>
+    <div id="northdakota-list">
+        <h3>North Dakota</h3>
     </div>
-    <div class="column">
-        <div id="illinois-list">
-            <h4>Illinois</h4>
-        </div>
-        <div id="indiana-list">
-            <h4>Indiana</h4>
-        </div>
-        <div id="michigan-list">
-            <h4>Michigan</h4>
-        </div>
-        <div id="louisiana-list">
-            <h4>Louisiana</h4>
-        </div>
+    <div id="arizona-list">
+        <h3>Arizona</h3>
     </div>
-    <div class="column">
-        <div id="ohio-list">
-            <h4>Ohio</h4>
-        </div>
-        <div id="kentucky-list">
-            <h4>Kentucky</h4>
-        </div>
-        <div id="tennessee-list">
-            <h4>Tennessee</h4>
-        </div>
-        <div id="alabama-list">
-            <h4>Alabama</h4>
-        </div>
-        <div id="southca-list">
-            <h4>South Carolina</h4>
-        </div>
+    <div id="kansas-list">
+        <h3>Kansas</h3>
     </div>
-    <div class="column">
-        <div id="massachusetts-list">
-            <h4>Massachusetts</h4>
-        </div>
-        <div id="rhodei-list">
-            <h4>Rhode Island</h4>
-        </div>
-        <div id="connecticut-list">
-            <h4>Connecticut</h4>
-        </div>
-        <div id="ny-list">
-            <h4>New York</h4>
-        </div>
-        <div id="pennsylvania-list">
-            <h4>Pennsylvania</h4>
-        </div>
-        <div id="maryland-list">
-            <h4>Maryland</h4>
-        </div>
-        <div id="virginia-list">
-            <h4>Virginia</h4>
-        </div>
-        <div id="northca-list">
-            <h4>North Carolina</h4>
-        </div>
-        <div id="georgia-list">
-            <h4>Georgia</h4>
-        </div>
-        <div id="florida-list">
-            <h4>Florida</h4>
-        </div>
+    <div id="minnesota-list">
+        <h3>Minnesota</h3>
+    </div>
+    <div id="missouri-list">
+        <h3>Missouri</h3>
+    </div>
+    <div id="wisconsin-list">
+        <h3>Wisconsin</h3>
+    </div>
+    <div id="oklahoma-list">
+        <h3>Oklahoma</h3>
+    </div>
+    <div id="texas-list">
+        <h3>Texas</h3>
+    </div>
+    <div id="illinois-list">
+        <h3>Illinois</h3>
+    </div>
+    <div id="indiana-list">
+        <h3>Indiana</h3>
+    </div>
+    <div id="michigan-list">
+        <h3>Michigan</h3>
+    </div>
+    <div id="louisiana-list">
+        <h3>Louisiana</h3>
+    </div>
+    <div id="ohio-list">
+        <h3>Ohio</h3>
+    </div>
+    <div id="kentucky-list">
+        <h3>Kentucky</h3>
+    </div>
+    <div id="tennessee-list">
+        <h3>Tennessee</h3>
+    </div>
+    <div id="alabama-list">
+        <h3>Alabama</h3>
+    </div>
+    <div id="southca-list">
+        <h3>South Carolina</h3>
+    </div>
+    <div id="massachusetts-list">
+        <h3>Massachusetts</h3>
+    </div>
+    <div id="rhodei-list">
+        <h3>Rhode Island</h3>
+    </div>
+    <div id="connecticut-list">
+        <h3>Connecticut</h3>
+    </div>
+    <div id="ny-list">
+        <h3>New York</h3>
+    </div>
+    <div id="pennsylvania-list">
+        <h3>Pennsylvania</h3>
+    </div>
+    <div id="maryland-list">
+        <h3>Maryland</h3>
+    </div>
+    <div id="virginia-list">
+        <h3>Virginia</h3>
+    </div>
+    <div id="northca-list">
+        <h3>North Carolina</h3>
+    </div>
+    <div id="georgia-list">
+        <h3>Georgia</h3>
+    </div>
+    <div id="florida-list">
+        <h3>Florida</h3>
     </div>
 
     <script>
@@ -178,175 +166,175 @@
             var school_total = 0;
             for (i = 0; i < hawaii_schools.length; i++) { 
                 var div = document.getElementById('hawaii-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+hawaii_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+hawaii_schools[i]+"</a><br/>";
                 school_total++;       
             }
             state_total++;
             for (i = 0; i < cali_schools.length; i++) { 
                 var div = document.getElementById('california-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+cali_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+cali_schools[i]+"</a><br/>";
                 school_total++;       
             }
             state_total++;
             for (i = 0; i < northd_schools.length; i++) { 
                 var div = document.getElementById('northdakota-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+northd_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+northd_schools[i]+"</a><br/>";
                 school_total++;       
             }
             state_total++;
             for (i = 0; i < arizona_schools.length; i++) { 
                 var div = document.getElementById('arizona-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+arizona_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+arizona_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < kansas_schools.length; i++) { 
                 var div = document.getElementById('kansas-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+kansas_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+kansas_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < minnesota_schools.length; i++) { 
                 var div = document.getElementById('minnesota-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+minnesota_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+minnesota_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < missouri_schools.length; i++) { 
                 var div = document.getElementById('missouri-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+missouri_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+missouri_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < wisconsin_schools.length; i++) { 
                 var div = document.getElementById('wisconsin-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+wisconsin_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+wisconsin_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < oklahoma_schools.length; i++) { 
                 var div = document.getElementById('oklahoma-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+oklahoma_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+oklahoma_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < texas_schools.length; i++) { 
                 var div = document.getElementById('texas-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+texas_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+texas_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < illinois_schools.length; i++) { 
                 var div = document.getElementById('illinois-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+illinois_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+illinois_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < indiana_schools.length; i++) { 
                 var div = document.getElementById('indiana-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+indiana_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+indiana_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < michigan_schools.length; i++) { 
                 var div = document.getElementById('michigan-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+michigan_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+michigan_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < louisiana_schools.length; i++) { 
                 var div = document.getElementById('louisiana-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+louisiana_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+louisiana_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < ohio_schools.length; i++) { 
                 var div = document.getElementById('ohio-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+ohio_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+ohio_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < kentucky_schools.length; i++) { 
                 var div = document.getElementById('kentucky-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+kentucky_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+kentucky_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < tennessee_schools.length; i++) { 
                 var div = document.getElementById('tennessee-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+tennessee_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+tennessee_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < alabama_schools.length; i++) { 
                 var div = document.getElementById('alabama-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+alabama_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+alabama_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < southca_schools.length; i++) { 
                 var div = document.getElementById('southca-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+southca_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+southca_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < massachusetts_schools.length; i++) { 
                 var div = document.getElementById('massachusetts-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+massachusetts_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+massachusetts_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < rhodei_schools.length; i++) { 
                 var div = document.getElementById('rhodei-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+rhodei_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+rhodei_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < connecticut_schools.length; i++) { 
                 var div = document.getElementById('connecticut-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+connecticut_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+connecticut_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < ny_schools.length; i++) { 
                 var div = document.getElementById('ny-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+ny_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+ny_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i < pennsylvania_schools.length; i++) { 
                 var div = document.getElementById('pennsylvania-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+pennsylvania_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+pennsylvania_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i <  maryland_schools.length; i++) { 
                 var div = document.getElementById('maryland-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+maryland_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+maryland_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i <  virginia_schools.length; i++) { 
                 var div = document.getElementById('virginia-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+virginia_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+virginia_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i <  northca_schools.length; i++) { 
                 var div = document.getElementById('northca-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+northca_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+northca_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i <  georgia_schools.length; i++) { 
                 var div = document.getElementById('georgia-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+georgia_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+georgia_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
             for (i = 0; i <  florida_schools.length; i++) { 
                 var div = document.getElementById('florida-list');
-                div.innerHTML += "<small><a href='#' onClick=\"gotoPoint("+school_total+");\">"+florida_schools[i]+"</a></small><br/>";
+                div.innerHTML += "<a href='#' onClick=\"gotoPoint("+school_total+");\">"+florida_schools[i]+"</a><br/>";
                 school_total++;        
             }
             state_total++;
@@ -514,10 +502,13 @@
                 });
                 
                 newmarker['infowindow'] = new google.maps.InfoWindow({
-                        content: html
-                    });
+                    content: html
+                });
 
                 google.maps.event.addListener(newmarker, 'click', function() {
+                    for (i = 0; i < markers.length; i++) {
+                        markers[i]['infowindow'].close();  
+                    }
                     this['infowindow'].open(map, this);
                 });
                 
@@ -526,9 +517,6 @@
             for (i = 0; i < school_name.length; i++) { 
                 createMarker(school_name[i][2], school_name[i][3], school_info(i), school_name[i][4]); 
             }
-
-            var markerCluster = new MarkerClusterer(map, markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
             var yellow_count = 0;
             var blue_count = 0;
@@ -545,7 +533,7 @@
             }   
             var high_school_count = document.getElementById("charter-count");
                 high_school_count.innerHTML = "<h1 align='center'>" + school_name.length + " Chapters | " + state_total + " States</h1>"+
-                "<h1 align='center'><small>" + yellow_count + " Universities | " + blue_count + " High Schools | " + red_count + " Middle Schools</small></h1>";
+                "<h1 align='center'><small><font color='FFD600'>" + yellow_count + " Universities </font><img src="+goldStar+" alt='University Star'> | <font color='0288D1'>" + blue_count + " High Schools </font> <img src="+blueStar+" alt='High School Star'> | <font color='A52714'>" + red_count + " Middle Schools</font><img src="+redStar+" alt='Middle School Star'></small></h1>";
             }
         function gotoPoint(myPoint){
             map.setCenter(new google.maps.LatLng(markers[myPoint].position.lat(), markers[myPoint].position.lng()));
@@ -556,8 +544,6 @@
             markers[myPoint]['infowindow'].open(map, markers[myPoint]);
         }
         window.onload = buildHTML();
-    </script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsT57WXsNNSeIh589wiB9jdMsPLjI4mHc&callback=initMap">
