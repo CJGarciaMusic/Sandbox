@@ -101,4 +101,6 @@ if #error_list > 0 then
     finenv.UI():AlertInfo(full_string, "Unable To Process The Following:")
 end
 
-create_quarter_tone("Third Quarter Sharp")
+-- create_quarter_tone("Third Quarter Sharp")
+
+print(tonumber("E4A0"))
